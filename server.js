@@ -5,6 +5,11 @@ import express from 'express'
 // Importeer de Liquid package (ook als dependency via npm geïnstalleerd)
 import { Liquid } from 'liquidjs';
 
+// fetch naar buurtcampus directus
+const apiResponse = await fetch('https://fdnd-agency.directus.app/items/buurtcampuskrant_stories')
+
+const apiResponseJSON = await apiResponse.json()
+
 // Maak een nieuwe Express applicatie aan, waarin we de server configureren
 const app = express()
 
@@ -26,14 +31,31 @@ app.set('views', './views')
 
 console.log('Let op: Er zijn nog geen routes. Voeg hier dus eerst jouw GET en POST routes toe.')
 
-/*
-// Zie https://expressjs.com/en/5x/api.html#app.get.method over app.get()
-app.get(…, async function (request, response) {
-  
-  // Zie https://expressjs.com/en/5x/api.html#res.render over response.render()
-  response.render(…)
+
+// district fields
+
+const districts =["oost", "nieuw-west", "zuidoost"];
+
+app.use((req, res, next) => {
+  res.locals.districts =districts;
+  next();
 })
-*/
+
+// index GET route
+app.get('/', async function (req, res){
+  response.render('index.liquid')
+})
+
+// districts GET route
+app.get('/district/:district_name', async function (req, res) {
+
+  const district = req.params.district_name
+  const districtDetailResponse =await fetch('https://fdnd-agency.directus.app/items/buurtcampuskrant_stories?filter[district][_eq]=' + district
+  )
+
+  const districtDetailResponseJSON = await districtDetailResponse.json()
+  response.render('district.liquid', {district: districtDetailResponseJSON.data})
+})
 
 /*
 // Zie https://expressjs.com/en/5x/api.html#app.post.method over app.post()
