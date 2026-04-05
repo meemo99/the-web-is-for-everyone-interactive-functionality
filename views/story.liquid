@@ -16,6 +16,24 @@
 
 <section class="comment-form-section">
   <h2>Laat een reactie achter!</h2>
+
+  {% if success %}
+    <div class="alert alert-success">
+      <p>✓ Je reactie is geplaatst!</p>
+    </div>
+  {% endif %}
+
+  {% if error == 'missing-fields' %}
+    <div class="alert alert-error">
+      <p>✗ Vul alle velden in!</p>
+    </div>
+  {% elsif error == 'post-failed' %}
+    <div class="alert alert-error">
+      <p>✗ Er is iets misgegaan, probeer het opnieuw.</p>
+    </div>
+  {% endif %}
+
+
   <form action="/story/{{ story.slug }}" method="POST">
     <input type="hidden" name="story_id" value="{{ story.id }}">
     <textarea name="comment" placeholder="Laat een reactie achter!"></textarea>
