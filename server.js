@@ -73,7 +73,9 @@ app.get('/story/:slug', async function (req, res) {
 
   res.render('story.liquid', {
     story: story,
-    comments: commentsJSON.data
+    comments: commentsJSON.data,
+    success: req.query.success,
+    error: req.query.error
   })
 
 })
@@ -126,6 +128,10 @@ app.post('/story/:slug', async function (req, res) {
 
   } else {
     // POST a new comment
+    if (!req.body.name || !req.body.comment) {
+      return res.redirect(303, '/story/' + slug + '?error=missing-fields')
+    }
+
     const postResponse = await fetch('https://fdnd-agency.directus.app/items/buurtcampuskrant_stories_comments', {
       method: 'POST',
       body: JSON.stringify({
@@ -138,8 +144,12 @@ app.post('/story/:slug', async function (req, res) {
       }
     })
 
+    if (!postResponse.ok) {
+      return res.redirect(303, '/story/' + slug + '?error=post-failed')
+    }
+
     const postJSON = await postResponse.json()
-    res.redirect(303, '/story/' + slug + '#comment-' + postJSON.data.id)
+    res.redirect(303, '/story/' + slug + '?success=true#comment-' + postJSON.data.id)
   }
 })
 
