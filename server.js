@@ -91,6 +91,36 @@ app.post(…, async function (request, response) {
 })
 */
 
+app.post('/story/:slug', async function (req, res) {
+
+  const slug = req.params.slug
+
+
+  if (req.body.comment_id) {
+    // DELETE a comment
+    await fetch('https://fdnd-agency.directus.app/items/buurtcampuskrant_stories_comments/' + req.body.comment_id, {
+      method: 'DELETE'
+    })
+    res.redirect(303, '/story/' + slug)
+
+  } else {
+    // POST a new comment
+    const postResponse = await fetch('https://fdnd-agency.directus.app/items/buurtcampuskrant_stories_comments', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: req.body.name,
+        comment: req.body.comment,
+        story: req.body.story_id
+      }),
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8'
+      }
+    })
+
+    const postJSON = await postResponse.json()
+    res.redirect(303, '/story/' + slug + '#comment-' + postJSON.data.id)
+  }
+})
 
 // Stel het poortnummer in waar Express op moet gaan luisteren
 // Lokaal is dit poort 8000; als deze applicatie ergens gehost wordt, waarschijnlijk poort 80
