@@ -14,6 +14,7 @@
     --text-colour-primary: rgb(51, 52, 103);
     --text-colour-secondary: rgb(255, 255, 255);
 
+
     /* font */
     --font-heading: 28pt;
     --font-subheading: 18pt;
@@ -21,6 +22,20 @@
     --font-body: 10pt;
     --font-bullets: 10pt;
     --font-subkop: 10pt;
+}
+
+/* inverted-colors media-query: Limited availability */
+@media (inverted-colors: inverted) {
+    :root {
+        --nieuw-west-primary: rgb(113, 92, 180);
+        --zuidoost-primary: rgb(247, 164, 155);
+        --oost-primary: rgb(204, 203, 152);
+        --primary-bg: rgb(75, 66, 47);
+        --secondary-bg: rgb(21, 164, 243);
+        --mud-bg: rgb(150, 159, 176);
+        --text-colour-primary: rgb(204, 203, 152);
+        --text-colour-secondary: rgb(0, 0, 0);
+    }
 }
 
 /* wildely available */
