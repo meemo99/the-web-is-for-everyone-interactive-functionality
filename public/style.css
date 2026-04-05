@@ -3,6 +3,10 @@
     font-family: 'arial';
 }
 
+@view-transition {
+    navigation: auto;
+}
+
 h1 {
     font-family: 'BuurtCampusArial';
     font-size: var(--font-heading);
