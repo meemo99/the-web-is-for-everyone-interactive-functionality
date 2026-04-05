@@ -1,3 +1,19 @@
+{% render 'partials/head.liquid', title: 'BuurtCampuskrant', districtName: districtName %}
+<nav>
+  <ul>
+    {% for district in districts %}
+      <a href="/district/{{ district }}" class="district-nav">{{ district | capitalize }}</a>
+    {% endfor %}
+  </ul>
+</nav>
+</header>
+
+<article>
+  <h2>{{ story.title }}</h2>
+  <p class="intro">{{ story.intro }}</p>
+  <div>{{ story.body | raw }}</div>
+</article>
+
 <section class="comment-form-section">
   <h2>Laat een reactie achter!</h2>
   <form action="/story/{{ story.slug }}" method="POST">
@@ -21,3 +37,5 @@
     </div>
   {% endfor %}
 </section>
+
+{% render 'partials/foot.liquid' %}

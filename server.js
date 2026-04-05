@@ -6,15 +6,13 @@ import express from 'express'
 import { Liquid } from 'liquidjs';
 
 // fetch naar buurtcampus directus
-const apiResponse = await fetch('https://fdnd-agency.directus.app/items/buurtcampuskrant_stories')
 
-const apiResponseJSON = await apiResponse.json()
 
 // Maak een nieuwe Express applicatie aan, waarin we de server configureren
 const app = express()
 
 // Maak werken met data uit formulieren iets prettiger
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 
 // Gebruik de map 'public' voor statische bestanden (resources zoals CSS, JavaScript, afbeeldingen en fonts)
 // Bestanden in deze map kunnen dus door de browser gebruikt worden
@@ -34,27 +32,50 @@ console.log('Let op: Er zijn nog geen routes. Voeg hier dus eerst jouw GET en PO
 
 // district fields
 
-const districts =["oost", "nieuw-west", "zuidoost"];
+const districts = ["oost", "nieuw-west", "zuidoost", "algemeen"];
 
 app.use((req, res, next) => {
-  res.locals.districts =districts;
+  res.locals.districts = districts;
   next();
 })
 
 // index GET route
-app.get('/', async function (req, res){
-  response.render('index.liquid')
+app.get('/', async function (req, res) {
+  const apiResponse = await fetch('https://fdnd-agency.directus.app/items/buurtcampuskrant_stories?sort=-date&limit=4&filter[date][_nnull]=true')
+  const apiResponseJSON = await apiResponse.json()
+
+  res.render('index.liquid', { stories: apiResponseJSON.data })
 })
 
 // districts GET route
 app.get('/district/:district_name', async function (req, res) {
 
   const district = req.params.district_name
-  const districtDetailResponse =await fetch('https://fdnd-agency.directus.app/items/buurtcampuskrant_stories?filter[district][_eq]=' + district
+  const districtDetailResponse = await fetch('https://fdnd-agency.directus.app/items/buurtcampuskrant_stories?filter[district][_eq]=' + district
   )
 
   const districtDetailResponseJSON = await districtDetailResponse.json()
-  response.render('district.liquid', {district: districtDetailResponseJSON.data})
+  res.render('district.liquid', { district: districtDetailResponseJSON.data, districtName: district })
+})
+
+// articles GET route
+app.get('/story/:slug', async function (req, res) {
+  const slug = req.params.slug
+
+  const storyResponse = await fetch('https://fdnd-agency.directus.app/items/buurtcampuskrant_stories?filter[slug][_eq]=' + slug)
+  const storyJSON = await storyResponse.json()
+  const story = storyJSON.data[0]
+
+
+  const commentsResponse = await fetch('https://fdnd-agency.directus.app/items/buurtcampuskrant_stories_comments?filter[story][_eq]=' + story.id)
+  const commentsJSON = await commentsResponse.json()
+
+
+  res.render('story.liquid', {
+    story: story,
+    comments: commentsJSON.data
+  })
+
 })
 
 /*
@@ -130,4 +151,8 @@ app.set('port', process.env.PORT || 8000)
 app.listen(app.get('port'), function () {
   // Toon een bericht in de console
   console.log(`Daarna kun je via http://localhost:${app.get('port')}/ jouw interactieve website bekijken.\n\nThe Web is for Everyone. Maak mooie dingen 🙂`)
+})
+
+app.use((req, res, next) => {
+  res.status(404).send("Sorry can't find that!")
 })

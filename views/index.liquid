@@ -1,0 +1,31 @@
+{% render 'partials/head.liquid', title: 'BuurtCampuskrant', districtName: districtName %}
+   <nav>
+                {% for district in districts%}
+                    
+                        <a href="/district/{{ district }}" class="district-nav district-{{ story.district }}">{{ district |capitalize }}</a>
+                    
+                {% endfor %}
+            
+     </nav>
+    </header>
+
+    <div class="art-container">
+        {% for story in stories %}
+            <article class="index-article district-{{ story.district }}">
+                <a href="/story/{{ story.slug}}">
+                    <h2>{{ story.title }}</h2>
+                </a>
+                <div class ="tags">
+                <p class="district-tag">{{ story.district |capitalize }}</p> 
+                <p class="district-tag">{{ story.target_group |capitalize  }}</p>
+                </div>
+                {% if story.cover %}
+                    <img class="cover" src="https://fdnd-agency.directus.app/assets/{{ story.cover }}" alt="story.title">
+                {% endif %}
+                <p class="intro">{{ story.intro }}</p>
+                <small style="color:var(--text-colour-secondary)">{{ story.date}}</small>
+            </article>
+        {% endfor %}  
+    </div>
+
+{% render 'partials/foot.liquid' %}

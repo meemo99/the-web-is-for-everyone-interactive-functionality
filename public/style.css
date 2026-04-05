@@ -1,0 +1,187 @@
+* {
+    margin: 0;
+    font-family: 'arial';
+}
+
+h1 {
+    font-family: 'BuurtCampusArial';
+    font-size: var(--font-heading);
+    color: var(--text-colour-primary);
+}
+
+h2 {
+    font-size: var(--font-subheading);
+}
+
+
+a {
+    text-decoration: none;
+    color: var(--text-colour-secondary);
+}
+
+.district-nav {
+    text-decoration: none;
+    background-color: var(--secondary-bg);
+    color: var(--text-colour-secondary);
+    padding: 10px;
+    margin-right: 5px;
+}
+
+ul {
+    list-style: none;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--primary-bg);
+    width: 100%;
+    height: 95px;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+nav {
+    margin: 5px;
+}
+
+.art-container {
+    display: grid;
+
+    @media (min-width: 480px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    @media (min-width: 1280px) {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+.index-article {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: auto;
+    border-radius: 10px;
+    background-color: rgb(188, 181, 172);
+    margin: 10px;
+    padding: 5px;
+    color: var(--text-colour-secondary);
+
+    @media (min-width: 1280px) {
+        width: 90%;
+    }
+}
+
+.index-article,
+img {
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.cover {
+
+    width: 100%;
+    height: 200px;
+}
+
+.tags {
+    display: flex;
+    flex-direction: row;
+}
+
+.district-tag {
+    width: fit-content;
+    padding: .25rem 1rem;
+    background-color: var(--secondary-bg);
+    margin: 1rem;
+}
+
+.district-oost {
+    background-color: var(--oost-primary);
+}
+
+.district-nieuw-west {
+    background-color: var(--nieuw-west-primary);
+}
+
+.district-zuidoost {
+    background-color: var(--zuidoost-primary);
+}
+
+/* Comment form section */
+.comment-form-section {
+    background-color: #f0f0f0;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.comment-form-section h2 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.comment-form-section textarea {
+    width: 620px;
+    height: 120px;
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1rem;
+    resize: none;
+    margin-bottom: 8px;
+}
+
+.comment-form-section input[type="text"] {
+    width: 620px;
+    padding: 12px;
+    border: none;
+    border-bottom: 2px solid #333;
+    background-color: #e8e8e8;
+    font-size: 1rem;
+    border-radius: 4px 4px 0 0;
+}
+
+.comment-form-section .supporting-text {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 4px;
+}
+
+/* Comments list section */
+.comments-section h2 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.comment-card {
+    border: 1.5px solid #333;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.comment-card .comment-user {
+    position: absolute;
+    top: -10px;
+    left: 12px;
+    background-color: white;
+    padding: 0 6px;
+    font-size: 0.8rem;
+    color: #333;
+}
+
+.comment-card p {
+    font-size: 1rem;
+    color: #333;
+}
