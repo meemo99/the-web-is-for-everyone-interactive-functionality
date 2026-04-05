@@ -22,8 +22,8 @@ Dit is de Readme voor de opdrachtgever Buurtcampuskrant. Er is een homepagina ge
 
 #### Homepagina
 <img width="1432" height="835" alt="image" src="https://github.com/user-attachments/assets/bf667372-5bb2-418a-8b45-28f417b25eda" />
-#### Wijkpagina
 
+#### Wijkpagina
 ###### Oost
 <img width="1432" height="830" alt="image" src="https://github.com/user-attachments/assets/f7f815a5-cf14-46c4-a531-145cff79a660" />
 
@@ -48,11 +48,47 @@ Bij een succesvolle post krijgt de gebruiker een succes melding te zien en staat
 
 ## Kenmerken
 <!-- Bij Kenmerken staat welke technieken zijn gebruikt en hoe. Wat is de HTML structuur? Wat zijn de belangrijkste dingen in CSS? Wat is er met JS gedaan en hoe? Misschien heb je iets met NodeJS gedaan, of heb je een framework of library gebruikt? -->
-Ipv dat ik voor elk district een liquidpagina heb gemaakt, heb ik 1 main template gemaakt die ik in nodejs heb aangeroepen per district. Eerst met een variable voor alle districten (oost, zuidoost, nieuw-west, algemeen) en daarna een get-route die filtert op district_name. 
-Via CSS heb ik ook de districtkleuren gekoppeld aan de article door in de class name met curlybrackets de districts aan te roepen en in CSS de kleur te koppelen per district.
+
+#### Styling
+
+Bij het ontwerpen is er gehouden aan de huisstijl van de Buurtcampuskrant, met name bij de wijken(elke wijk heeft zijn eigen kleur)
+<img width="261" height="481" alt="image" src="https://github.com/user-attachments/assets/8d3a3547-f1d8-4cdc-929b-c816b0313db9" />
+
+De font die gebruikt wordt is de eigen <a href ="https://github.com/meemo99/the-web-is-for-everyone-interactive-functionality/edit/main/README.md#homepagina">Buurtcampus Arial</a> (voor koppen en subkoppen) en Arial voor de rest van de website.
+
+#### Technieken
+Ipv dat ik voor elk district een liquidpagina heb gemaakt, heb ik 1 main template gemaakt die ik in nodejs heb aangeroepen per district. Eerst met een variable voor alle districten
+<pre><code>const districts = ["oost", "nieuw-west", "zuidoost", "algemeen"];</code></pre>
+
+en daarna een get-route die filtert op district_name. 
+<pre><code>app.get('/district/:district_name', async function (req, res) {
+  const district = req.params.district_name
+  const districtDetailResponse = await fetch('https://fdnd-agency.directus.app/items/buurtcampuskrant_stories?filter[district][_eq]=' + district
+  )
+  const districtDetailResponseJSON = await districtDetailResponse.json()
+  res.render('district.liquid', { district: districtDetailResponseJSON.data, districtName: district })</code></pre>
+
+Via CSS heb ik de districtkleuren gekoppeld aan de article door in de class name met curlybrackets de districts aan te roepen 
+<pre><code>    article class="index-article district-{{ story.district }}"</code></pre>
+en in CSS de kleur te koppelen per district.
+<pre><code>.district-oost {
+    background-color: var(--oost-primary);
+}
+
+.district-nieuw-west {
+    background-color: var(--nieuw-west-primary);
+}
+
+.district-zuidoost {
+    background-color: var(--zuidoost-primary);</code></pre>
 
 ## Installatie
 <!-- Bij Installatie staat hoe een andere developer aan jouw repo kan werken -->
+Download <a href="https://nodejs.org/en/download">NodeJs</a>. Fork en clone daarna deze repo.
+Open dit vervolgens in je codespace(ik gebruik Visual Studio Code).
+Open daarna de Terminal met`` ^` `` `(control + `) en voer  `npm install`  uit.
+Voer als laatste ` npm install `  uit. De site staat nu via localhost live, klik op de localhost link om het openen in je browser.
+Om de server weer uit te zetten voer je `control c`  uit in je Terminal.
 
 
 ## Bronnen
