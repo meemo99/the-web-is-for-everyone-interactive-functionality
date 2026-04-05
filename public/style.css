@@ -117,10 +117,17 @@ img {
 
 /* Comment form section */
 .comment-form-section {
+    width: 350px;
+    height: auto;
     background-color: #f0f0f0;
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 24px;
+
+    @media(min-width: 1280px) {
+        width: 620px;
+        height: auto;
+    }
 }
 
 .comment-form-section h2 {
@@ -130,8 +137,7 @@ img {
 }
 
 .comment-form-section textarea {
-    width: 620px;
-    height: 120px;
+
     background-color: #e0e0e0;
     border: none;
     border-radius: 8px;
@@ -139,16 +145,25 @@ img {
     font-size: 1rem;
     resize: none;
     margin-bottom: 8px;
+
+    @media(min-width: 1280px) {
+        width: 570px;
+    }
 }
 
 .comment-form-section input[type="text"] {
-    width: 620px;
+
     padding: 12px;
     border: none;
     border-bottom: 2px solid #333;
     background-color: #e8e8e8;
     font-size: 1rem;
     border-radius: 4px 4px 0 0;
+    margin-bottom: 8px;
+
+    @media(min-width: 1280px) {
+        width: 570px;
+    }
 }
 
 .comment-form-section .supporting-text {
