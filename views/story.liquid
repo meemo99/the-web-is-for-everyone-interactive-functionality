@@ -1,0 +1,23 @@
+<section class="comment-form-section">
+  <h2>Laat een reactie achter!</h2>
+  <form action="/story/{{ story.slug }}" method="POST">
+    <input type="hidden" name="story_id" value="{{ story.id }}">
+    <textarea name="comment" placeholder="Laat een reactie achter!"></textarea>
+    <input type="text" name="name" placeholder="Vul hier je naam in!">
+    <button type="submit">Verstuur</button>
+  </form>
+</section>
+
+<section class="comments-section">
+  <h2>Reacties</h2>
+  {% for comment in comments %}
+    <div class="comment-card" id="comment-{{ comment.id }}">
+      <span class="comment-user">{{ comment.name }}</span>
+      <p>{{ comment.comment }}</p>
+      <form action="/story/{{ story.slug }}" method="POST">
+        <input type="hidden" name="comment_id" value="{{ comment.id }}">
+        <button type="submit">Verwijder</button>
+      </form>
+    </div>
+  {% endfor %}
+</section>
